@@ -1,0 +1,39 @@
+{
+    "name": "angular-google-recaptcha-v3-workspace",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "ng": "ng",
+        "start": "ng serve",
+        "build": "ng build angular-google-recaptcha-v3 && node -e \"const fs = require('fs'); if(fs.existsSync('README.md')) fs.copyFileSync('README.md', 'dist/angular-google-recaptcha-v3/README.md'); if(fs.existsSync('CHANGELOG.md')) fs.copyFileSync('CHANGELOG.md', 'dist/angular-google-recaptcha-v3/CHANGELOG.md');\"",
+        "build:playground": "ng build playground --base-href /angular-google-recaptcha-v3/",
+        "watch": "ng build angular-google-recaptcha-v3 --watch",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@angular/animations": "^22.0.0",
+        "@angular/build": "^22.0.0",
+        "@angular/common": "^22.0.0",
+        "@angular/compiler": "^22.0.0",
+        "@angular/core": "^22.0.0",
+        "@angular/forms": "^22.0.0",
+        "@angular/platform-browser": "^22.0.0",
+        "@angular/platform-browser-dynamic": "^22.0.0",
+        "@angular/router": "^22.0.0",
+        "rxjs": "~7.8.2",
+        "tslib": "^2.8.1",
+        "zone.js": "~0.16.2"
+    },
+    "devDependencies": {
+        "@angular-devkit/build-angular": "^22.0.0",
+        "@angular/cli": "^22.0.0",
+        "@angular/compiler-cli": "^22.0.0",
+        "@types/jest": "^30.0.0",
+        "@types/node": "^25.9.1",
+        "jest": "^30.4.2",
+        "jest-environment-jsdom": "^30.4.1",
+        "ng-packagr": "^22.0.0",
+        "ts-jest": "^29.4.11",
+        "typescript": "~6.0.3"
+    }
+}

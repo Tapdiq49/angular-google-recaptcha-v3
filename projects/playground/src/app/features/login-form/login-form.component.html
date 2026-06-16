@@ -1,0 +1,197 @@
+<div style="background-color: #1e293b; border-radius: 12px; padding: 2rem; border: 1px solid #334155;">
+  <h3 style="font-size: 1.5rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700; color: #f8fafc;">
+    reCAPTCHA v2 Checkbox & ControlValueAccessor
+  </h3>
+  <p style="color: #94a3b8; font-size: 0.875rem; margin-bottom: 1.5rem;">
+    Binds the custom component directly to a standard Reactive Form control using <code>formControlName</code>.
+  </p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+    
+    <!-- Form & Customization Column -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit()" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <label style="font-size: 0.875rem; font-weight: 600; color: #cbd5e1;">Username</label>
+          <input formControlName="username" type="text" placeholder="Enter username..." 
+            style="background-color: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.75rem; border-radius: 8px; font-size: 0.875rem; outline: none; transition: border-color 0.2s;" />
+          @if (loginForm.get('username')?.touched && loginForm.get('username')?.invalid) {
+            <div style="color: #f87171; font-size: 0.75rem; font-weight: 500;">
+              Username is required (min 4 characters).
+            </div>
+          }
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <label style="font-size: 0.875rem; font-weight: 600; color: #cbd5e1;">Password</label>
+          <input formControlName="password" type="password" placeholder="Enter password..." 
+            style="background-color: #0f172a; border: 1px solid #334155; color: #f8fafc; padding: 0.75rem; border-radius: 8px; font-size: 0.875rem; outline: none; transition: border-color 0.2s;" />
+        </div>
+
+        <!-- V2 reCAPTCHA Component with CVA and custom bindings -->
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <label style="font-size: 0.875rem; font-weight: 600; color: #cbd5e1;">Verification</label>
+          <angular-google-recaptcha-v3 #v2Recaptcha
+            [siteKey]="'6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'"
+            formControlName="recaptcha"
+            [theme]="v2Theme()"
+            [size]="v2Size()"
+            (resolved)="onV2Resolved($event)"
+            (error)="onV2Error()"
+            (expired)="onV2Expired()">
+          </angular-google-recaptcha-v3>
+          @if (loginForm.get('recaptcha')?.touched && loginForm.get('recaptcha')?.invalid) {
+            <div style="color: #f87171; font-size: 0.75rem; font-weight: 500;">
+              Please resolve the captcha verification.
+            </div>
+          }
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+          <button type="submit" [disabled]="loginForm.invalid" 
+            style="background-color: #2563eb; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; flex: 1;">
+            Submit Form
+          </button>
+          <button type="button" (click)="onFormReset()" 
+            style="background-color: #475569; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;">
+            Reset
+          </button>
+        </div>
+      </form>
+
+      <!-- V2 Component Customization Panel -->
+      <div style="background-color: #0f172a; padding: 1.25rem; border-radius: 8px; border: 1px solid #334155; display: flex; flex-direction: column; gap: 1rem;">
+        <h4 style="margin: 0; font-size: 0.95rem; color: #38bdf8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 0.5rem;">
+          Component Customization & Direct API
+        </h4>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+          <span style="color: #cbd5e1; font-weight: 500;">Theme [theme]</span>
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="button" (click)="setV2Theme('light')" 
+              [style.background-color]="v2Theme() === 'light' ? '#3b82f6' : '#334155'"
+              style="border: none; padding: 0.35rem 0.75rem; border-radius: 4px; color: white; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: background 0.2s;">
+              Light
+            </button>
+            <button type="button" (click)="setV2Theme('dark')" 
+              [style.background-color]="v2Theme() === 'dark' ? '#3b82f6' : '#334155'"
+              style="border: none; padding: 0.35rem 0.75rem; border-radius: 4px; color: white; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: background 0.2s;">
+              Dark
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+          <span style="color: #cbd5e1; font-weight: 500;">Size [size]</span>
+          <div style="display: flex; gap: 0.25rem;">
+            <button type="button" (click)="setV2Size('normal')" 
+              [style.background-color]="v2Size() === 'normal' ? '#3b82f6' : '#334155'"
+              style="border: none; padding: 0.35rem 0.5rem; border-radius: 4px; color: white; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: background 0.2s;">
+              Normal
+            </button>
+            <button type="button" (click)="setV2Size('compact')" 
+              [style.background-color]="v2Size() === 'compact' ? '#3b82f6' : '#334155'"
+              style="border: none; padding: 0.35rem 0.5rem; border-radius: 4px; color: white; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: background 0.2s;">
+              Compact
+            </button>
+            <button type="button" (click)="setV2Size('invisible')" 
+              [style.background-color]="v2Size() === 'invisible' ? '#3b82f6' : '#334155'"
+              style="border: none; padding: 0.35rem 0.5rem; border-radius: 4px; color: white; font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: background 0.2s;">
+              Invisible
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem; font-size: 0.85rem;">
+          <button type="button" (click)="executeV2Programmatically()" 
+            [disabled]="v2Size() !== 'invisible'"
+            style="background-color: #059669; color: white; border: none; padding: 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.25rem;"
+            [style.opacity]="v2Size() === 'invisible' ? '1' : '0.4'">
+            ⚡ execute() (Invisible only)
+          </button>
+          <button type="button" (click)="resetV2Programmatically()" 
+            style="background-color: #dc2626; color: white; border: none; padding: 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.25rem;">
+            🔄 reset() widget
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- State & Outputs Column -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="background-color: #0f172a; padding: 1.5rem; border-radius: 8px; border: 1px solid #334155;">
+        <h4 style="margin-top: 0; font-size: 1rem; color: #38bdf8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 0.5rem;">
+          Reactive Form State
+        </h4>
+        <table style="width: 100%; font-size: 0.875rem; border-collapse: collapse; margin-bottom: 1rem;">
+          <tr style="border-bottom: 1px solid #1e293b;">
+            <td style="padding: 0.5rem 0; color: #94a3b8; font-weight: 500;">Valid</td>
+            <td style="padding: 0.5rem 0; text-align: right; font-weight: bold;" [style.color]="loginForm.valid ? '#4ade80' : '#f87171'">
+              {{ loginForm.valid ? 'VALID' : 'INVALID' }}
+            </td>
+          </tr>
+          <tr style="border-bottom: 1px solid #1e293b;">
+            <td style="padding: 0.5rem 0; color: #94a3b8; font-weight: 500;">Pristine</td>
+            <td style="padding: 0.5rem 0; text-align: right; font-weight: bold; color: #facc15;">
+              {{ loginForm.pristine ? 'PRISTINE' : 'DIRTY' }}
+            </td>
+          </tr>
+          <tr style="border-bottom: 1px solid #1e293b;">
+            <td style="padding: 0.5rem 0; color: #94a3b8; font-weight: 500;">Touched</td>
+            <td style="padding: 0.5rem 0; text-align: right; font-weight: bold; color: #818cf8;">
+              {{ loginForm.touched ? 'TOUCHED' : 'UNTOUCHED' }}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem 0; color: #94a3b8; font-weight: 500;">Control Token</td>
+            <td style="padding: 0.5rem 0; text-align: right; font-family: monospace; font-size: 0.75rem; color: #cbd5e1; word-break: break-all;">
+              {{ loginForm.get('recaptcha')?.value ? (loginForm.get('recaptcha')?.value?.substring(0, 15) + '...') : 'null' }}
+            </td>
+          </tr>
+        </table>
+
+        <h4 style="margin-top: 1rem; font-size: 1rem; color: #38bdf8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 0.5rem;">
+          Last Form Submission
+        </h4>
+        <pre style="background: #1e293b; color: #4ade80; padding: 1rem; border-radius: 6px; font-size: 0.75rem; margin: 0; font-family: monospace; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; max-width: 310px;">
+{{ lastSubmittedValue() ? (lastSubmittedValue() | json) : 'No submission yet' }}
+        </pre>
+      </div>
+
+      <!-- Component Direct Event Output Console -->
+      <div style="background-color: #0f172a; padding: 1.25rem; border-radius: 8px; border: 1px solid #334155;">
+        <h4 style="margin-top: 0; font-size: 0.95rem; color: #38bdf8; font-weight: 700; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
+          Direct Component Event Outputs
+        </h4>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 150px; overflow-y: auto; font-family: monospace; font-size: 0.75rem;">
+          @if (v2EventLogs().length === 0) {
+            <div style="color: #64748b; padding: 0.5rem 0;">No direct component outputs logged yet. Try interacting with the reCAPTCHA box above.</div>
+          }
+          @for (log of v2EventLogs(); track log) {
+            <div style="color: #a5b4fc; border-bottom: 1px solid #1e293b; padding-bottom: 0.25rem;">
+              {{ log }}
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Documentation Snippet for V2 -->
+  <div style="margin-top: 2rem; border-top: 1px solid #334155; padding-top: 1.5rem;">
+    <h4 style="margin-top: 0; font-size: 1.1rem; color: #818cf8; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+      <span>🛠️ Code Example (Integration Code Reference)</span>
+    </h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div>
+        <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem; color: #94a3b8; font-weight: bold;">HTML (Template):</p>
+        <pre style="background: #0f172a; padding: 1rem; border-radius: 6px; font-size: 0.75rem; color: #38bdf8; border: 1px solid #334155; font-family: monospace; margin: 0; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">{{ v2HtmlCode }}</pre>
+      </div>
+      <div>
+        <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem; color: #94a3b8; font-weight: bold;">TypeScript (Component):</p>
+        <pre style="background: #0f172a; padding: 1rem; border-radius: 6px; font-size: 0.75rem; color: #38bdf8; border: 1px solid #334155; font-family: monospace; margin: 0; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">{{ v2TsCode }}</pre>
+      </div>
+    </div>
+  </div>
+</div>

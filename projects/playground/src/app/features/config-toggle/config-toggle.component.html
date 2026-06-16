@@ -1,0 +1,67 @@
+<div style="background-color: #1e293b; border-radius: 12px; padding: 2rem; border: 1px solid #334155;">
+  <h3 style="font-size: 1.5rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700; color: #f8fafc;">
+    Global Configuration Settings
+  </h3>
+  <p style="color: #94a3b8; font-size: 0.875rem; margin-bottom: 1.5rem;">
+    Configure global features dynamically. Toggles will mutate the internal configurations read by the script loader.
+  </p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+    
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; background: #0f172a; padding: 1rem; border-radius: 8px; border: 1px solid #334155;">
+        <div>
+          <h4 style="margin: 0; font-size: 0.95rem; color: #f8fafc;">Enterprise Mode</h4>
+          <p style="margin: 0.25rem 0 0 0; font-size: 0.75rem; color: #64748b;">Loads <code>enterprise.js</code> script instead of <code>api.js</code>.</p>
+        </div>
+        <button (click)="toggleEnterprise()" 
+          [style.background-color]="currentEnterpriseMode() ? '#22c55e' : '#64748b'"
+          style="border: none; padding: 0.5rem 1rem; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; transition: background-color 0.2s;">
+          {{ currentEnterpriseMode() ? 'ON' : 'OFF' }}
+        </button>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; background: #0f172a; padding: 1rem; border-radius: 8px; border: 1px solid #334155;">
+        <div>
+          <h4 style="margin: 0; font-size: 0.95rem; color: #f8fafc;">Domain Settings</h4>
+          <p style="margin: 0.25rem 0 0 0; font-size: 0.75rem; color: #64748b;">Switches scripts between standard google.com and regional recaptcha.net.</p>
+        </div>
+        <button (click)="toggleDomain()" 
+          style="background-color: #3b82f6; border: none; padding: 0.5rem 1rem; border-radius: 6px; color: white; font-weight: bold; cursor: pointer;">
+          {{ currentDomain() }}
+        </button>
+      </div>
+    </div>
+
+    <div style="background-color: #0f172a; padding: 1.5rem; border-radius: 8px; border: 1px solid #334155;">
+      <h4 style="margin-top: 0; font-size: 1rem; color: #38bdf8; font-weight: 700; margin-bottom: 0.75rem;">
+        Active Config Mock Object
+      </h4>
+      <pre style="background: #1e293b; color: #a855f7; padding: 1rem; border-radius: 6px; font-size: 0.8rem; margin: 0; font-family: monospace; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">
+&#123;
+  "recaptchaDomain": "{{ currentDomain() }}",
+  "useEnterprise": {{ currentEnterpriseMode() }},
+  "v2SiteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+  "v3SiteKey": "YOUR_V3_SITE_KEY"
+&#125;
+      </pre>
+      <p style="margin: 1rem 0 0 0; font-size: 0.75rem; color: #64748b; line-height: 1.4;">
+        *Note: Modifying settings will affect scripts that are loaded subsequently. If the script was already injected on initial load, browser caches the element.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Documentation Snippet for Config -->
+  <div style="margin-top: 2rem; border-top: 1px solid #334155; padding-top: 1.5rem;">
+    <h4 style="margin-top: 0; font-size: 1.1rem; color: #818cf8; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+      <span>🛠️ Code Example (Integration Code Reference)</span>
+    </h4>
+    <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+      <div>
+        <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem; color: #94a3b8; font-weight: bold;">Application Bootstrapping (main.ts / app.config.ts):</p>
+        <pre style="background: #0f172a; padding: 1rem; border-radius: 6px; font-size: 0.75rem; color: #cbd5e1; border: 1px solid #334155; font-family: monospace; margin: 0; overflow-x: auto;">{{ configCode }}</pre>
+      </div>
+    </div>
+  </div>
+</div>

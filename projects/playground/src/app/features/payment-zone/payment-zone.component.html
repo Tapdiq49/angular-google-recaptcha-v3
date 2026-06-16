@@ -1,0 +1,65 @@
+<div style="background-color: #1e293b; border-radius: 12px; padding: 2rem; border: 1px solid #334155;">
+  <h3 style="font-size: 1.5rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700; color: #f8fafc;">
+    reCAPTCHA v3 Action Execution
+  </h3>
+  <p style="color: #94a3b8; font-size: 0.875rem; margin-bottom: 1.5rem;">
+    Executes score-based evaluations via either legacy RxJS Observables or the modern async/await Promise API.
+  </p>
+
+  <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+    <button (click)="runV3Rxjs()" 
+      style="background: linear-gradient(135deg, #ef4444, #ec4899); border: none; color: white; padding: 1rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: transform 0.1s; flex: 1;">
+      Execute via RxJS (action: login)
+    </button>
+    <button (click)="runV3Promise()" 
+      style="background: linear-gradient(135deg, #10b981, #059669); border: none; color: white; padding: 1rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: transform 0.1s; flex: 1;">
+      Execute via Promise (action: checkout)
+    </button>
+  </div>
+
+  <!-- Log Console -->
+  <div style="background-color: #0f172a; padding: 1.5rem; border-radius: 8px; border: 1px solid #334155;">
+    <h4 style="margin-top: 0; font-size: 1.1rem; color: #facc15; font-weight: 700; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+      <span>Live Action Logger</span>
+      <span style="font-size: 0.75rem; font-weight: 500; padding: 0.25rem 0.5rem; background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.2); border-radius: 4px; color: #facc15;">
+        Active logs: {{ logs().length }}
+      </span>
+    </h4>
+
+    <div style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 250px; overflow-y: auto;">
+      @if (logs().length === 0) {
+        <div style="color: #64748b; font-size: 0.875rem; text-align: center; padding: 2rem 0;">
+          No executions completed yet. Click a button above.
+        </div>
+      }
+      
+      @for (log of logs(); track log) {
+        <div style="display: grid; grid-template-columns: 80px 180px 1fr 100px; gap: 1rem; background-color: #1e293b; padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.825rem; font-family: monospace; align-items: center;">
+          <span style="color: #64748b;">{{ log.time }}</span>
+          <span style="color: #cbd5e1; font-weight: bold;">{{ log.action }}</span>
+          <span style="color: #4ade80; word-break: break-all;">{{ log.token }}</span>
+          <span [style.color]="log.type === 'Promise' ? '#10b981' : '#f43f5e'" style="text-align: right; font-weight: bold;">
+            [{{ log.type }}]
+          </span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Documentation Snippet for V3 -->
+  <div style="margin-top: 2rem; border-top: 1px solid #334155; padding-top: 1.5rem;">
+    <h4 style="margin-top: 0; font-size: 1.1rem; color: #818cf8; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+      <span>🛠️ Code Example (Integration Code Reference)</span>
+    </h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div>
+        <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem; color: #94a3b8; font-weight: bold;">RxJS (Observable Way):</p>
+        <pre style="background: #0f172a; padding: 1rem; border-radius: 6px; font-size: 0.75rem; color: #ef4444; border: 1px solid #334155; font-family: monospace; margin: 0; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">{{ v3RxjsCode }}</pre>
+      </div>
+      <div>
+        <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem; color: #94a3b8; font-weight: bold;">Promise (Async/Await Way):</p>
+        <pre style="background: #0f172a; padding: 1rem; border-radius: 6px; font-size: 0.75rem; color: #10b981; border: 1px solid #334155; font-family: monospace; margin: 0; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">{{ v3PromiseCode }}</pre>
+      </div>
+    </div>
+  </div>
+</div>

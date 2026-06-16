@@ -1,0 +1,62 @@
+# ==============================================
+# Node & Dependency Management
+# ==============================================
+node_modules/
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+yarn-debug.log.*
+yarn-error.log.*
+
+# ==============================================
+# Angular Ecosystem
+# ==============================================
+.angular/
+dist/
+*.tsbuildinfo
+
+# ==============================================
+# IDE & Code Editors
+# ==============================================
+# VS Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+
+# WebStorm / IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# ==============================================
+# Testing Environments
+# ==============================================
+coverage/
+.jest/
+*.lcov
+
+# ==============================================
+# OS Artifacts
+# ==============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ==============================================
+# Logs
+# ==============================================
+*.log
+server.log

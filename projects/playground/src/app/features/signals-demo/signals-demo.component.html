@@ -1,0 +1,100 @@
+<div style="background-color: #1e293b; border-radius: 12px; padding: 2rem; border: 1px solid #334155;">
+  <h3 style="font-size: 1.5rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700; color: #f8fafc;">
+    Modern Signals Integration
+  </h3>
+  <p style="color: #94a3b8; font-size: 0.875rem; margin-bottom: 1.5rem;">
+    Shows the dynamic reactive state values bound to <code>RecaptchaSignalService</code>.
+  </p>
+
+  <!-- Signal State Cards -->
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;">
+    
+    <div style="background-color: #0f172a; padding: 1rem; border-radius: 8px; border: 1px solid #334155; text-align: center;">
+      <p style="color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin: 0 0 0.5rem 0;">verified()</p>
+      <p [style.color]="signalService.verified() ? '#4ade80' : '#f87171'" style="font-size: 1.25rem; font-weight: 800; margin: 0;">
+        {{ signalService.verified() ? 'YES' : 'NO' }}
+      </p>
+    </div>
+
+    <div style="background-color: #0f172a; padding: 1rem; border-radius: 8px; border: 1px solid #334155; text-align: center;">
+      <p style="color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin: 0 0 0.5rem 0;">loading()</p>
+      <p [style.color]="signalService.loading() ? '#facc15' : '#64748b'" style="font-size: 1.25rem; font-weight: 800; margin: 0;">
+        {{ signalService.loading() ? 'LOADING' : 'IDLE' }}
+      </p>
+    </div>
+
+    <div style="background-color: #0f172a; padding: 1rem; border-radius: 8px; border: 1px solid #334155; text-align: center;">
+      <p style="color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin: 0 0 0.5rem 0;">error()</p>
+      <p [style.color]="signalService.error() ? '#f87171' : '#64748b'" style="font-size: 1rem; font-weight: 800; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        {{ signalService.error() || 'NONE' }}
+      </p>
+    </div>
+
+    <div style="background-color: #0f172a; padding: 1rem; border-radius: 8px; border: 1px solid #334155; text-align: center;">
+      <p style="color: #64748b; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin: 0 0 0.5rem 0;">token() length</p>
+      <p style="font-size: 1.25rem; font-weight: 800; margin: 0; color: #818cf8;">
+        {{ signalService.token() ? signalService.token()!.length : 0 }} chars
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Simulation Action Buttons Panel -->
+  <div style="background-color: #0f172a; padding: 1.5rem; border-radius: 8px; border: 1px solid #334155; margin-bottom: 2rem;">
+    <h4 style="margin-top: 0; font-size: 1.1rem; color: #38bdf8; font-weight: 700; margin-bottom: 1rem;">
+      Simulation Action Panel
+    </h4>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+      <button (click)="simulateV2Resolution()" 
+        style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; color: white; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+        ✅ Simulate V2 Resolution
+      </button>
+      <button (click)="simulateNetworkError()" 
+        style="background: linear-gradient(135deg, #ef4444, #b91c1c); border: none; color: white; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+        ❌ Simulate Network Error
+      </button>
+      <button (click)="triggerLoadingState()" 
+        style="background: linear-gradient(135deg, #f59e0b, #d97706); border: none; color: white; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+        ⏳ Trigger Loading State
+      </button>
+      <button (click)="resetAllSignals()" 
+        style="background: linear-gradient(135deg, #6b7280, #4b5563); border: none; color: white; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+        🔄 Reset All Signals
+      </button>
+    </div>
+  </div>
+
+  <!-- Effect Logs -->
+  <div style="background-color: #0f172a; padding: 1.5rem; border-radius: 8px; border: 1px solid #334155;">
+    <h4 style="margin-top: 0; font-size: 1.1rem; color: #818cf8; font-weight: 700; margin-bottom: 1rem;">
+      Angular <code>effect()</code> Output Log Console
+    </h4>
+    <div style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 0.8rem;">
+      @if (signalEffectLogs().length === 0) {
+        <div style="color: #64748b;">Waiting for signal emissions...</div>
+      }
+      @for (msg of signalEffectLogs(); track msg) {
+        <div style="color: #a5b4fc; border-bottom: 1px solid #1e293b; padding-bottom: 0.25rem;">
+          {{ msg }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Documentation Snippet for Signals -->
+  <div style="margin-top: 2rem; border-top: 1px solid #334155; padding-top: 1.5rem;">
+    <h4 style="margin-top: 0; font-size: 1.1rem; color: #818cf8; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+      <span>🛠️ Code Example (Integration Code Reference)</span>
+    </h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div>
+        <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem; color: #94a3b8; font-weight: bold;">HTML (Template):</p>
+        <pre style="background: #0f172a; padding: 1rem; border-radius: 6px; font-size: 0.75rem; color: #818cf8; border: 1px solid #334155; font-family: monospace; margin: 0; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">{{ signalsHtmlCode }}</pre>
+      </div>
+      <div>
+        <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem; color: #94a3b8; font-weight: bold;">TypeScript (Component):</p>
+        <pre style="background: #0f172a; padding: 1rem; border-radius: 6px; font-size: 0.75rem; color: #818cf8; border: 1px solid #334155; font-family: monospace; margin: 0; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word;">{{ signalsTsCode }}</pre>
+      </div>
+    </div>
+  </div>
+</div>

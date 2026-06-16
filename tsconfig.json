@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "es2020",
+    "lib": ["es2022", "dom"],
+    "esModuleInterop": true,
+    "paths": {
+      "angular-google-recaptcha-v3": ["projects/angular-google-recaptcha-v3/src/public-api.ts"],
+      "angular-google-recaptcha-v3/core": ["projects/angular-google-recaptcha-v3/core/src/public-api.ts"],
+      "angular-google-recaptcha-v3/v2": ["projects/angular-google-recaptcha-v3/v2/src/public-api.ts"],
+      "angular-google-recaptcha-v3/v3": ["projects/angular-google-recaptcha-v3/v3/src/public-api.ts"],
+      "angular-google-recaptcha-v3/enterprise": ["projects/angular-google-recaptcha-v3/enterprise/src/public-api.ts"],
+      "angular-google-recaptcha-v3/signals": ["projects/angular-google-recaptcha-v3/signals/src/public-api.ts"],
+      "angular-google-recaptcha-v3/forms": ["projects/angular-google-recaptcha-v3/forms/src/public-api.ts"],
+      "angular-google-recaptcha-v3/testing": ["projects/angular-google-recaptcha-v3/testing/src/public-api.ts"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}
