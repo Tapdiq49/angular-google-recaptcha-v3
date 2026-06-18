@@ -15,7 +15,7 @@ interface LogEntry {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './payment-zone.component.html',
-  styleUrls: []
+  styleUrl: './payment-zone.component.scss'
 })
 export class PaymentZoneComponent {
   private v3Service = inject(RecaptchaV3Service);
@@ -80,6 +80,7 @@ export class MyComponent {
       this.signalService.setToken(token);
       this.addLog('executeAsync("checkout")', token, 'Promise');
     } catch (err: any) {
+      console.error('Promise execution failed:', err);
       this.signalService.setError(err.message || 'Error occurred');
     } finally {
       this.signalService.setLoading(false);

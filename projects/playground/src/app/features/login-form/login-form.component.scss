@@ -1,0 +1,244 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+// ─── Card wrapper ─────────────────────────────────────────────────────────────
+.login-card {
+  @include card;
+}
+
+.login-card__title {
+  font-size: $font-size-2xl;
+  margin: 0 0 $space-2 0;
+  font-weight: 700;
+  color: $color-text-primary;
+}
+
+.login-card__subtitle {
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  margin-bottom: $space-6;
+}
+
+// ─── Two-column layout ────────────────────────────────────────────────────────
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-8;
+}
+
+// ─── Form column ──────────────────────────────────────────────────────────────
+.form-col {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.form-root {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $color-text-label;
+  }
+
+  &__input {
+    @include form-input;
+  }
+
+  &__error {
+    color: $color-red;
+    font-size: $font-size-xs;
+    font-weight: 500;
+  }
+}
+
+.form-actions {
+  display: flex;
+  gap: $space-4;
+  margin-top: $space-2;
+}
+
+.btn-submit {
+  @include btn-primary($color-blue-dark);
+  flex: 1;
+}
+
+.btn-reset {
+  @include btn-primary($color-slate);
+}
+
+// ─── Customization panel ──────────────────────────────────────────────────────
+.customize-panel {
+  @include inner-panel;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  &__heading {
+    margin: 0;
+    font-size: 0.95rem;
+    color: $color-sky;
+    font-weight: 700;
+    border-bottom: 1px solid $color-border;
+    padding-bottom: $space-2;
+  }
+}
+
+.prop-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+
+  &__label {
+    color: $color-text-label;
+    font-weight: 500;
+  }
+
+  &__btns {
+    display: flex;
+    gap: $space-2;
+  }
+}
+
+.btn-opt {
+  @include btn-option;
+}
+
+.api-actions {
+  display: flex;
+  gap: $space-2;
+  margin-top: $space-1;
+  font-size: 0.85rem;
+}
+
+.btn-execute {
+  background-color: #059669;
+  color: white;
+  border: none;
+  padding: $space-2;
+  border-radius: $radius-md;
+  font-size: $font-size-xs;
+  font-weight: 700;
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
+}
+
+.btn-reset-widget {
+  background-color: $color-red-dark;
+  color: white;
+  border: none;
+  padding: $space-2;
+  border-radius: $radius-md;
+  font-size: $font-size-xs;
+  font-weight: 700;
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
+}
+
+// ─── State & output column ────────────────────────────────────────────────────
+.output-col {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.state-panel {
+  @include inner-panel;
+
+  &__heading {
+    @include section-heading($color-sky);
+    margin-top: 0;
+    font-size: $font-size-base;
+  }
+}
+
+.state-table {
+  width: 100%;
+  font-size: $font-size-sm;
+  border-collapse: collapse;
+  margin-bottom: $space-4;
+
+  td {
+    padding: $space-2 0;
+  }
+
+  tr {
+    border-bottom: 1px solid $color-bg-surface;
+  }
+
+  .state-table__key {
+    color: $color-text-secondary;
+    font-weight: 500;
+  }
+
+  .state-table__val {
+    text-align: right;
+    font-weight: 700;
+  }
+}
+
+.submission-pre {
+  background: $color-bg-surface;
+  color: $color-green;
+  padding: $space-4;
+  border-radius: $radius-md;
+  font-size: $font-size-xs;
+  margin: 0;
+  font-family: $font-family-mono;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 310px;
+}
+
+// ─── Event output console ─────────────────────────────────────────────────────
+.event-console {
+  @include inner-panel;
+
+  &__heading {
+    @include section-heading($color-sky);
+    margin-top: 0;
+    font-size: 0.95rem;
+    margin-bottom: $space-3;
+  }
+
+  &__log {
+    @include log-scroll(150px);
+  }
+}
+
+.log-entry {
+  color: $color-violet;
+  border-bottom: 1px solid $color-bg-surface;
+  padding-bottom: $space-1;
+}
+
+.log-empty {
+  color: $color-text-muted;
+  padding: $space-2 0;
+}
+
+// ─── Doc snippet section ──────────────────────────────────────────────────────
+.doc-section {
+  @include doc-snippet-section;
+}
+
+.code-block--sky   { @include code-block($color-sky); }

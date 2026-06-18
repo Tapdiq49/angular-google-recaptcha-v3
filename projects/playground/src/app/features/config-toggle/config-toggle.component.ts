@@ -7,7 +7,7 @@ import { RECAPTCHA_CONFIG, RecaptchaConfig } from 'angular-google-recaptcha-v3/c
   standalone: true,
   imports: [CommonModule],
   templateUrl: './config-toggle.component.html',
-  styleUrls: []
+  styleUrl: './config-toggle.component.scss'
 })
 export class ConfigToggleComponent {
   private config = inject(RECAPTCHA_CONFIG, { optional: true });
@@ -40,11 +40,17 @@ bootstrapApplication(AppComponent, {
     }
   }
 
+  public isReloadRequired = signal(false);
+
   public toggleDomain(): void {
     if (this.config) {
       const newDomain = this.currentDomain() === 'google.com' ? 'recaptcha.net' : 'google.com';
       this.config.recaptchaDomain = newDomain;
       this.currentDomain.set(newDomain);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('recaptcha_domain', newDomain);
+      }
+      this.isReloadRequired.set(true);
     }
   }
 
@@ -53,6 +59,16 @@ bootstrapApplication(AppComponent, {
       const newMode = !this.currentEnterpriseMode();
       this.config.useEnterprise = newMode;
       this.currentEnterpriseMode.set(newMode);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('recaptcha_enterprise', String(newMode));
+      }
+      this.isReloadRequired.set(true);
+    }
+  }
+
+  public reloadPage(): void {
+    if (typeof window !== 'undefined') {
+      window.location.reload();
     }
   }
 }

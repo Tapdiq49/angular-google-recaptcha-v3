@@ -16,7 +16,7 @@ import { ConfigToggleComponent } from './features/config-toggle/config-toggle.co
     ConfigToggleComponent
   ],
   templateUrl: './app.component.html',
-  styleUrls: []
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   public activeTab = signal<'v2-forms' | 'v3-execute' | 'signals' | 'config-toggle'>('v2-forms');

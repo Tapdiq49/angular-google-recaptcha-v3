@@ -1,0 +1,99 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+// ─── Page wrapper ─────────────────────────────────────────────────────────────
+.app-wrapper {
+  font-family: $font-family-base;
+  background-color: $color-bg-base;
+  color: $color-text-primary;
+  min-height: 100vh;
+  padding: $space-8;
+}
+
+// ─── Header ───────────────────────────────────────────────────────────────────
+.app-header {
+  max-width: 1200px;
+  margin: 0 auto $space-10 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid $color-border;
+  padding-bottom: $space-6;
+
+  .app-header__title {
+    font-size: $font-size-3xl;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, $color-sky, $color-indigo);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .app-header__subtitle {
+    color: $color-text-secondary;
+    margin: $space-2 0 0 0;
+    font-size: $font-size-base;
+  }
+
+  .app-header__badges {
+    display: flex;
+    gap: $space-4;
+  }
+
+  .badge--sky    { @include badge($color-sky); }
+  .badge--indigo { @include badge($color-indigo); }
+}
+
+// ─── Main layout ──────────────────────────────────────────────────────────────
+.app-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: $space-8;
+}
+
+// ─── Sidebar ──────────────────────────────────────────────────────────────────
+.app-sidebar {
+  @include card($color-bg-surface, $radius-xl);
+  padding: $space-6;
+  height: fit-content;
+
+  &__heading {
+    font-size: $font-size-sm;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: $color-text-muted;
+    margin: 0 0 $space-4 0;
+    letter-spacing: 0.05em;
+  }
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  width: 100%;
+  border: none;
+  padding: $space-3 $space-4;
+  border-radius: $radius-lg;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: $transition-fast;
+  font-size: $font-size-base;
+}
+
+// ─── Content section ──────────────────────────────────────────────────────────
+.app-content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+}

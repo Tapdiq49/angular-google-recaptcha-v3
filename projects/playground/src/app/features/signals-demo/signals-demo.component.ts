@@ -7,7 +7,7 @@ import { RecaptchaSignalService } from 'angular-google-recaptcha-v3/signals';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './signals-demo.component.html',
-  styleUrls: []
+  styleUrl: './signals-demo.component.scss'
 })
 export class SignalsDemoComponent {
   public signalService = inject(RecaptchaSignalService);
@@ -48,7 +48,7 @@ export class MyComponent {
       const logMsg = `[Signal Update] loading=${loading}, verified=${verified}, token=${token ? token.substring(0, 15) + '...' : 'null'}, error=${error}`;
       
       this.signalEffectLogs.update((prev) => [logMsg, ...prev].slice(0, 10));
-    });
+    }, { allowSignalWrites: true });
   }
 
   public simulateV2Resolution(): void {

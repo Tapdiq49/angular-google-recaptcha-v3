@@ -1,0 +1,173 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+// ─── Card wrapper ─────────────────────────────────────────────────────────────
+.config-card {
+  @include card;
+}
+
+.config-card__title {
+  font-size: $font-size-2xl;
+  margin: 0 0 $space-2 0;
+  font-weight: 700;
+  color: $color-text-primary;
+}
+
+.config-card__subtitle {
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  margin-bottom: $space-6;
+}
+
+// ─── Main grid ────────────────────────────────────────────────────────────────
+.config-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-8;
+}
+
+// ─── Toggles column ───────────────────────────────────────────────────────────
+.toggles-col {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $color-bg-base;
+  padding: $space-4;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+
+  &__heading {
+    margin: 0;
+    font-size: 0.95rem;
+    color: $color-text-primary;
+  }
+
+  &__desc {
+    margin: $space-1 0 0 0;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+
+    code {
+      font-family: $font-family-mono;
+      background: $color-bg-surface;
+      padding: 0 4px;
+      border-radius: 4px;
+    }
+  }
+}
+
+.btn-toggle-on {
+  border: none;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background-color: #22c55e;
+}
+
+.btn-toggle-off {
+  border: none;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  background-color: $color-text-muted;
+}
+
+.btn-toggle-domain {
+  background-color: $color-blue;
+  border: none;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+// ─── Config mock panel ────────────────────────────────────────────────────────
+.mock-panel {
+  @include inner-panel;
+  padding: $space-6;
+
+  &__heading {
+    margin-top: 0;
+    font-size: $font-size-base;
+    color: $color-sky;
+    font-weight: 700;
+    margin-bottom: $space-3;
+  }
+
+  &__pre {
+    background: $color-bg-surface;
+    color: #a855f7;
+    padding: $space-4;
+    border-radius: $radius-md;
+    font-size: 0.8rem;
+    margin: 0;
+    font-family: $font-family-mono;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  &__note {
+    margin: $space-4 0 0 0;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    line-height: 1.4;
+  }
+}
+
+// ─── Doc snippet section ──────────────────────────────────────────────────────
+.doc-section {
+  @include doc-snippet-section;
+  grid-template-columns: 1fr; // Single column override
+}
+
+.code-block--slate { @include code-block($color-text-label); overflow-x: auto; }
+
+// ─── Warning banner ───────────────────────────────────────────────────────────
+.warning-banner {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px dashed #f59e0b;
+  padding: $space-4;
+  border-radius: $radius-lg;
+  margin-bottom: $space-6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+
+  &__content {
+    color: #f59e0b;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  &__btn {
+    background-color: #f59e0b;
+    border: none;
+    padding: $space-2 $space-4;
+    border-radius: $radius-md;
+    color: #1e1b4b;
+    font-weight: 700;
+    font-size: $font-size-xs;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

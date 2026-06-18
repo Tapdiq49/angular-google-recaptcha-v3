@@ -1,21 +1,26 @@
 import { Injectable } from '@angular/core';
-import { RecaptchaV2Component } from './recaptcha-v2.component';
+import { IRecaptchaV2 } from './recaptcha-v2.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecaptchaV2Service {
-  private instances = new Map<string, RecaptchaV2Component>();
+  // Fix #5: Use IRecaptchaV2 interface instead of the concrete RecaptchaV2Component
+  // class so the component can inject this service without creating a circular dependency.
+  private instances = new Map<string, IRecaptchaV2>();
 
   /**
    * Registers a V2 widget instance under a specific key.
+   * When using RecaptchaV2Component with a [registrationKey] input, registration
+   * happens automatically. Manual registration is only needed for custom widgets.
    */
-  public register(key: string, component: RecaptchaV2Component): void {
+  public register(key: string, component: IRecaptchaV2): void {
     this.instances.set(key, component);
   }
 
   /**
    * Unregisters a V2 widget instance.
+   * RecaptchaV2Component unregisters automatically on destroy when [registrationKey] is set.
    */
   public unregister(key: string): void {
     this.instances.delete(key);

@@ -1,0 +1,154 @@
+@use 'sass:color';
+@use 'variables' as *;
+
+// ─── Card / Panel ─────────────────────────────────────────────────────────────
+/// Standard dark surface card used across every feature panel.
+@mixin card($bg: $color-bg-surface, $radius: $radius-xl) {
+  background-color: $bg;
+  border-radius: $radius;
+  border: 1px solid $color-border;
+  padding: $space-8;
+}
+
+/// Inner panel (slightly deeper background, smaller radius).
+@mixin inner-panel($radius: $radius-lg) {
+  background-color: $color-bg-base;
+  border-radius: $radius;
+  border: 1px solid $color-border;
+  padding: $space-5;
+}
+
+// ─── Section heading ──────────────────────────────────────────────────────────
+/// Card-level `<h4>` with a bottom separator line.
+@mixin section-heading($color: $color-sky) {
+  margin: 0 0 $space-3 0;
+  font-size: $font-size-lg;
+  font-weight: 700;
+  color: $color;
+  border-bottom: 1px solid $color-border;
+  padding-bottom: $space-2;
+}
+
+// ─── Code block (`<pre>`) ─────────────────────────────────────────────────────
+/// Monospace code / snippet block.
+@mixin code-block($color: $color-sky) {
+  background: $color-bg-base;
+  padding: $space-4;
+  border-radius: $radius-md;
+  font-size: $font-size-xs;
+  color: $color;
+  border: 1px solid $color-border;
+  font-family: $font-family-mono;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+// ─── Form input ───────────────────────────────────────────────────────────────
+@mixin form-input {
+  background-color: $color-bg-base;
+  border: 1px solid $color-border;
+  color: $color-text-primary;
+  padding: $space-3;
+  border-radius: $radius-lg;
+  font-size: $font-size-sm;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// ─── Buttons ──────────────────────────────────────────────────────────────────
+/// Primary action button.
+@mixin btn-primary($bg: $color-blue-dark) {
+  background-color: $bg;
+  color: white;
+  border: none;
+  padding: $space-3 $space-6;
+  border-radius: $radius-lg;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition-fast;
+}
+
+/// Compact toggle / option button (sidebar or customization panel).
+@mixin btn-option {
+  border: none;
+  padding: $space-1 $space-3;
+  border-radius: $radius-sm;
+  color: white;
+  font-size: $font-size-xs;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/// Full-width gradient action button (used in payment-zone / signals).
+@mixin btn-gradient($from, $to) {
+  background: linear-gradient(135deg, $from, $to);
+  border: none;
+  color: white;
+  padding: $space-3 $space-4;
+  border-radius: $radius-lg;
+  font-weight: 700;
+  cursor: pointer;
+  transition: $transition-fast;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+// ─── Badge / pill ─────────────────────────────────────────────────────────────
+@mixin badge($color, $alpha-bg: 0.1, $alpha-border: 0.2) {
+  background: color.change($color, $alpha: $alpha-bg);
+  border: 1px solid color.change($color, $alpha: $alpha-border);
+  color: $color;
+  padding: $space-2 $space-4;
+  border-radius: $radius-full;
+  font-size: $font-size-sm;
+  font-weight: 600;
+}
+
+// ─── Scrollable log container ─────────────────────────────────────────────────
+@mixin log-scroll($max-height: 200px) {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  max-height: $max-height;
+  overflow-y: auto;
+  font-family: $font-family-mono;
+  font-size: $font-size-xs;
+}
+
+// ─── Two-column doc snippet grid ──────────────────────────────────────────────
+@mixin doc-snippet-section {
+  margin-top: $space-8;
+  border-top: 1px solid $color-border;
+  padding-top: $space-6;
+
+  .doc-heading {
+    margin: 0 0 $space-3 0;
+    font-size: $font-size-lg;
+    color: $color-indigo;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+
+  .doc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-4;
+  }
+
+  .doc-label {
+    margin: 0 0 $space-2 0;
+    font-size: 0.8rem;
+    color: $color-text-secondary;
+    font-weight: 700;
+  }
+}

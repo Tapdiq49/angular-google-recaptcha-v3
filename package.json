@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
+        "start": "ng serve playground",
         "build": "ng build angular-google-recaptcha-v3 && node -e \"const fs = require('fs'); if(fs.existsSync('README.md')) fs.copyFileSync('README.md', 'dist/angular-google-recaptcha-v3/README.md'); if(fs.existsSync('CHANGELOG.md')) fs.copyFileSync('CHANGELOG.md', 'dist/angular-google-recaptcha-v3/CHANGELOG.md');\"",
         "build:playground": "ng build playground --base-href /angular-google-recaptcha-v3/",
         "watch": "ng build angular-google-recaptcha-v3 --watch",

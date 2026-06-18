@@ -1,0 +1,105 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+// ─── Card wrapper ─────────────────────────────────────────────────────────────
+.payment-card {
+  @include card;
+}
+
+.payment-card__title {
+  font-size: $font-size-2xl;
+  margin: 0 0 $space-2 0;
+  font-weight: 700;
+  color: $color-text-primary;
+}
+
+.payment-card__subtitle {
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  margin-bottom: $space-6;
+}
+
+// ─── Action buttons row ───────────────────────────────────────────────────────
+.action-row {
+  display: flex;
+  gap: $space-4;
+  margin-bottom: $space-8;
+}
+
+.btn-rxjs {
+  @include btn-gradient($color-red-mid, #ec4899);
+  flex: 1;
+  padding: $space-4 $space-6;
+}
+
+.btn-promise {
+  @include btn-gradient($color-green-mid, $color-green-dark);
+  flex: 1;
+  padding: $space-4 $space-6;
+}
+
+// ─── Log console ─────────────────────────────────────────────────────────────
+.log-console {
+  @include inner-panel;
+  padding: $space-6;
+
+  &__header {
+    margin: 0 0 $space-4 0;
+    font-size: $font-size-lg;
+    color: $color-yellow;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__badge {
+    font-size: $font-size-xs;
+    font-weight: 500;
+    padding: $space-1 $space-2;
+    background: rgba(250, 204, 21, 0.1);
+    border: 1px solid rgba(250, 204, 21, 0.2);
+    border-radius: $radius-sm;
+    color: $color-yellow;
+  }
+
+  &__entries {
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    max-height: 250px;
+    overflow-y: auto;
+  }
+}
+
+.log-empty {
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+  text-align: center;
+  padding: $space-8 0;
+}
+
+.log-row {
+  display: grid;
+  grid-template-columns: 80px 180px 1fr 100px;
+  gap: $space-4;
+  background-color: $color-bg-surface;
+  padding: $space-3 $space-4;
+  border-radius: $radius-md;
+  font-size: 0.825rem;
+  font-family: $font-family-mono;
+  align-items: center;
+
+  &__time   { color: $color-text-muted; }
+  &__action { color: $color-text-label; font-weight: 700; }
+  &__token  { color: $color-green; word-break: break-all; }
+  &__type   { text-align: right; font-weight: 700; }
+}
+
+// ─── Doc snippet section ──────────────────────────────────────────────────────
+.doc-section {
+  @include doc-snippet-section;
+}
+
+.code-block--red   { @include code-block($color-red-mid); }
+.code-block--green { @include code-block($color-green-mid); }

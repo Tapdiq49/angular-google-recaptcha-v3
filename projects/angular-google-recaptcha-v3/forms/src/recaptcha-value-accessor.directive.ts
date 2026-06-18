@@ -4,7 +4,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RecaptchaV2Component } from 'angular-google-recaptcha-v3/v2';
 
 @Directive({
-  selector: 'angular-google-recaptcha-v3[formControlName],angular-google-recaptcha-v3[formControl],angular-google-recaptcha-v3[ngModel]',
+  selector: `angular-google-recaptcha-v3[formControlName],angular-google-recaptcha-v3[formControl],angular-google-recaptcha-v3[ngModel],
+             recaptcha-v2[formControlName],recaptcha-v2[formControl],recaptcha-v2[ngModel]`,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

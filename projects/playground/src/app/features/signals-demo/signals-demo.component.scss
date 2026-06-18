@@ -1,0 +1,107 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+// ─── Card wrapper ─────────────────────────────────────────────────────────────
+.signals-card {
+  @include card;
+}
+
+.signals-card__title {
+  font-size: $font-size-2xl;
+  margin: 0 0 $space-2 0;
+  font-weight: 700;
+  color: $color-text-primary;
+}
+
+.signals-card__subtitle {
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  margin-bottom: $space-6;
+}
+
+// ─── Signal state card grid ───────────────────────────────────────────────────
+.signal-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-4;
+  margin-bottom: $space-8;
+}
+
+.signal-card {
+  @include inner-panel($radius-lg);
+  padding: $space-4;
+  text-align: center;
+
+  &__label {
+    color: $color-text-muted;
+    font-size: $font-size-xs;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 $space-2 0;
+  }
+
+  &__value {
+    font-size: $font-size-xl;
+    font-weight: 800;
+    margin: 0;
+  }
+}
+
+// ─── Simulation action panel ──────────────────────────────────────────────────
+.sim-panel {
+  @include inner-panel;
+  padding: $space-6;
+  margin-bottom: $space-8;
+
+  &__heading {
+    margin: 0 0 $space-4 0;
+    font-size: $font-size-lg;
+    color: $color-sky;
+    font-weight: 700;
+  }
+
+  &__actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: $space-4;
+  }
+}
+
+.btn-sim-blue   { @include btn-gradient($color-blue, #1d4ed8); }
+.btn-sim-red    { @include btn-gradient($color-red-mid, #b91c1c); }
+.btn-sim-orange { @include btn-gradient($color-orange, #d97706); }
+.btn-sim-gray   { @include btn-gradient($color-gray, #4b5563); }
+
+// ─── Effect log console ───────────────────────────────────────────────────────
+.effect-log {
+  @include inner-panel;
+  padding: $space-6;
+
+  &__heading {
+    margin: 0 0 $space-4 0;
+    font-size: $font-size-lg;
+    color: $color-indigo;
+    font-weight: 700;
+  }
+
+  &__entries {
+    @include log-scroll(200px);
+  }
+}
+
+.log-entry {
+  color: $color-violet;
+  border-bottom: 1px solid $color-bg-surface;
+  padding-bottom: $space-1;
+}
+
+.log-empty {
+  color: $color-text-muted;
+}
+
+// ─── Doc snippet section ──────────────────────────────────────────────────────
+.doc-section {
+  @include doc-snippet-section;
+}
+
+.code-block--indigo { @include code-block($color-indigo); }

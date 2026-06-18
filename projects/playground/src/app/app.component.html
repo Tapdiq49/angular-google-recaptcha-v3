@@ -1,80 +1,80 @@
-<div style="font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #0f172a; color: #f8fafc; min-height: 100vh; padding: 2rem;">
-  
+<div class="app-wrapper">
+
   <!-- Header -->
-  <header style="max-width: 1200px; margin: 0 auto 2.5rem auto; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 1.5rem;">
+  <header class="app-header">
     <div>
-      <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      <h1 class="app-header__title">
         angular-google-recaptcha-v3
       </h1>
-      <p style="color: #94a3b8; margin: 0.5rem 0 0 0; font-size: 1rem;">Enterprise Showcase & Sandbox Playground</p>
+      <p class="app-header__subtitle">Enterprise Showcase & Sandbox Playground</p>
     </div>
-    <div style="display: flex; gap: 1rem;">
-      <span style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.2); color: #38bdf8; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600;">
-        Angular 19+
+    <div class="app-header__badges">
+      <span class="badge--sky">
+        Angular 22
       </span>
-      <span style="background: rgba(129, 140, 248, 0.1); border: 1px solid rgba(129, 140, 248, 0.2); color: #818cf8; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600;">
+      <span class="badge--indigo">
         Zoneless Ready
       </span>
     </div>
   </header>
 
   <!-- Main Container -->
-  <main style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 280px 1fr; gap: 2rem;">
-    
+  <main class="app-main">
+
     <!-- Sidebar Navigation -->
-    <aside style="background-color: #1e293b; border-radius: 12px; padding: 1.5rem; border: 1px solid #334155; height: fit-content;">
-      <h2 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: #64748b; margin-top: 0; margin-bottom: 1rem; letter-spacing: 0.05em;">
+    <aside class="app-sidebar">
+      <h2 class="app-sidebar__heading">
         Navigation Menu
       </h2>
-      <nav style="display: flex; flex-direction: column; gap: 0.75rem;">
-        <button (click)="setTab('v2-forms')" 
+      <nav class="sidebar-nav">
+        <button (click)="setTab('v2-forms')"
           [style.background-color]="activeTab() === 'v2-forms' ? '#3b82f6' : 'transparent'"
           [style.color]="activeTab() === 'v2-forms' ? '#ffffff' : '#94a3b8'"
-          style="display: flex; align-items: center; gap: 0.75rem; width: 100%; border: none; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 600; text-align: left; cursor: pointer; transition: all 0.2s;">
+          class="nav-btn">
           🗳️ V2 & Forms (CVA)
         </button>
-        <button (click)="setTab('v3-execute')" 
+        <button (click)="setTab('v3-execute')"
           [style.background-color]="activeTab() === 'v3-execute' ? '#3b82f6' : 'transparent'"
           [style.color]="activeTab() === 'v3-execute' ? '#ffffff' : '#94a3b8'"
-          style="display: flex; align-items: center; gap: 0.75rem; width: 100%; border: none; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 600; text-align: left; cursor: pointer; transition: all 0.2s;">
+          class="nav-btn">
           ⚡ V3 Actions
         </button>
-        <button (click)="setTab('signals')" 
+        <button (click)="setTab('signals')"
           [style.background-color]="activeTab() === 'signals' ? '#3b82f6' : 'transparent'"
           [style.color]="activeTab() === 'signals' ? '#ffffff' : '#94a3b8'"
-          style="display: flex; align-items: center; gap: 0.75rem; width: 100%; border: none; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 600; text-align: left; cursor: pointer; transition: all 0.2s;">
+          class="nav-btn">
           📶 Modern Signals
         </button>
-        <button (click)="setTab('config-toggle')" 
+        <button (click)="setTab('config-toggle')"
           [style.background-color]="activeTab() === 'config-toggle' ? '#3b82f6' : 'transparent'"
           [style.color]="activeTab() === 'config-toggle' ? '#ffffff' : '#94a3b8'"
-          style="display: flex; align-items: center; gap: 0.75rem; width: 100%; border: none; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 600; text-align: left; cursor: pointer; transition: all 0.2s;">
+          class="nav-btn">
           ⚙️ Global Config
         </button>
       </nav>
     </aside>
 
     <!-- Playground Display -->
-    <section style="display: flex; flex-direction: column; gap: 2rem;">
-      
+    <section class="app-content">
+
       <!-- TAB 1: V2 Checkbox + CVA Forms -->
       @if (activeTab() === 'v2-forms') {
-        <app-login-form />
+      <app-login-form />
       }
 
       <!-- TAB 2: V3 Execute (Observable / Promise) -->
       @if (activeTab() === 'v3-execute') {
-        <app-payment-zone />
+      <app-payment-zone />
       }
 
       <!-- TAB 3: Modern Signals Integration -->
       @if (activeTab() === 'signals') {
-        <app-signals-demo />
+      <app-signals-demo />
       }
 
       <!-- TAB 4: Enterprise vs Traditional Switch -->
       @if (activeTab() === 'config-toggle') {
-        <app-config-toggle />
+      <app-config-toggle />
       }
 
     </section>

@@ -9,7 +9,7 @@ import { RecaptchaValueAccessorDirective } from 'angular-google-recaptcha-v3/for
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RecaptchaV2Component, RecaptchaValueAccessorDirective],
   templateUrl: './login-form.component.html',
-  styleUrls: []
+  styleUrl: './login-form.component.scss'
 })
 export class LoginFormComponent {
   // ViewChild reference for programmatic V2 API calling

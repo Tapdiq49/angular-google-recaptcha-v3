@@ -20,4 +20,11 @@ export class RecaptchaMockV3Service {
   public execute(action: string): Observable<string> {
     return of(this.mockToken);
   }
+
+  /**
+   * Mock executeAsync returning a pre-configured token promise immediately.
+   */
+  public executeAsync(action: string): Promise<string> {
+    return Promise.resolve(this.mockToken);
+  }
 }

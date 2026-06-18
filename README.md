@@ -1,15 +1,15 @@
 # angular-google-recaptcha-v3
 
-A production-grade, enterprise-ready, tree-shakable Angular library for integrating Google reCAPTCHA v2 (Checkbox & Invisible), v3, and Enterprise. Fully compatible with Angular 12 through 22, SSR‑safe (Universal), and native Angular Signals‑ready.
+A production-grade, enterprise-ready, tree-shakable Angular library for integrating Google reCAPTCHA v2 (Checkbox & Invisible), v3, and Enterprise. Fully compatible with Angular 17.1 through 22, SSR‑safe (Universal), and native Angular Signals‑ready.
 
-👉 **[Interactive Live Demo (Playground)](https://tapdiq49.github.io/angular-google-recaptcha-v3/)**
+ **<a href="https://tapdiq49.github.io/angular-google-recaptcha-v3/" target="_blank">Interactive Live Demo (Playground)</a>**
 
 ---
 
 ## Key Features
 
-- **Full Angular Compatibility**: Out‑of‑the‑box support for Angular 12 to 22.
-- **First‑Class Signals Support**: Decoupled `angular-google-recaptcha-v3/signals` entry point for modern reactive applications (Angular 16+).
+- **Full Angular Compatibility**: Out‑of‑the‑box support for Angular 17.1 to 22.
+- **First‑Class Signals Support**: Decoupled `angular-google-recaptcha-v3/signals` entry point for modern reactive applications.
 - **SSR & Hydration Safe**: Strictly guards DOM operations on the server side using `isPlatformBrowser`.
 - **Zoneless Support**: Executes heavy execution logic outside `Zone.js` context for high performance.
 - **Dynamic Re‑Render**: V2 widget automatically re‑renders when inputs (theme, size, tabIndex, siteKey) change! No manual cleanup required!
@@ -21,7 +21,7 @@ A production-grade, enterprise-ready, tree-shakable Angular library for integrat
 
 ## Folder & Entrypoint Architecture
 
-To avoid breaking compilation in legacy Angular environments (versions 12–15) that do not support Signals, the codebase utilizes isolated secondary entry points:
+To provide clean architectural separation and optimize bundle sizes, the codebase utilizes isolated secondary entry points:
 
 - `angular-google-recaptcha-v3/core`: Script loading lifecycle, dynamic configuration tokens.
 - `angular-google-recaptcha-v3/v2`: V2 Checkbox and Invisible component.
@@ -41,7 +41,7 @@ npm install angular-google-recaptcha-v3
 
 Configure your global settings during the application bootstrap phase:
 
-### Standard Module Bootstrapping (Angular 12+)
+### Standard Module Bootstrapping (Angular 17+)
 ```typescript
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -65,7 +65,7 @@ const recaptchaConfig: RecaptchaConfig = {
 export class AppModule {}
 ```
 
-### Standalone Bootstrapping (Angular 14+)
+### Standalone Bootstrapping (Angular 17+)
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RECAPTCHA_CONFIG, RecaptchaConfig } from 'angular-google-recaptcha-v3/core';
