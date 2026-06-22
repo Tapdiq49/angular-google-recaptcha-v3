@@ -1,6 +1,6 @@
 {
   "name": "angular-google-recaptcha-v3",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A modern, standalone Google reCAPTCHA library for Angular supporting v2, v3, enterprise, reactive forms, and signals. Fully compatible with Angular versions 17.1–22",
   "repository": {
     "type": "git",

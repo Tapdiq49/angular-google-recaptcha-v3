@@ -1,0 +1,46 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.error-card {
+  @include card;
+}
+
+.error-card__title {
+  font-size: $font-size-2xl;
+  margin: 0 0 $space-2 0;
+  font-weight: 700;
+  color: $color-text-primary;
+}
+
+.error-card__description {
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  margin-bottom: $space-6;
+}
+
+.action-buttons {
+  margin-bottom: $space-6;
+}
+
+.btn-trigger {
+  @include btn-primary($color-red);
+}
+
+.result-box {
+  @include inner-panel;
+  margin-top: $space-4;
+  background-color: rgba($color-red, 0.05);
+  border: 1px solid rgba($color-red, 0.2);
+  
+  h3 {
+    margin: 0 0 $space-3 0;
+    color: $color-red;
+    font-size: $font-size-base;
+  }
+  
+  p {
+    margin: $space-2 0;
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+  }
+}

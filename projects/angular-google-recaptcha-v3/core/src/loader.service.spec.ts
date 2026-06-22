@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 import { RecaptchaLoaderService } from './loader.service';
 import { RECAPTCHA_CONFIG } from './tokens';
+import { RecaptchaLoadError } from './errors';
 
 function removeRecaptchaScript(): void {
   const script = document.getElementById('angular-google-recaptcha-v3-script');
@@ -135,6 +136,7 @@ describe('RecaptchaLoaderService', () => {
     const service = injector.get(RecaptchaLoaderService);
 
     service.scriptLoadError$.subscribe((err) => {
+      expect(err instanceof RecaptchaLoadError).toBe(true);
       expect(err.message).toContain('Failed to load');
       done();
     });
@@ -158,6 +160,7 @@ describe('RecaptchaLoaderService', () => {
     service.loadScript().subscribe({
       next: () => fail('should not emit value'),
       error: (err) => {
+        expect(err instanceof RecaptchaLoadError).toBe(true);
         expect(err.message).toContain('Failed to load');
         done();
       }

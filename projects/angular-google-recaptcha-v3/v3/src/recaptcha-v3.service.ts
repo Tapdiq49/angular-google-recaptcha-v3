@@ -2,7 +2,7 @@ import { Injectable, NgZone, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, firstValueFrom } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { RecaptchaLoaderService, RECAPTCHA_CONFIG } from 'angular-google-recaptcha-v3/core';
+import { RecaptchaLoaderService, RECAPTCHA_CONFIG, RecaptchaConfigurationError, RecaptchaExecuteError, RecaptchaLoadError } from 'angular-google-recaptcha-v3/core';
 
 /** Minimal structural type for the `grecaptcha` / `grecaptcha.enterprise` object. */
 interface Grecaptcha {
@@ -44,7 +44,7 @@ export class RecaptchaV3Service {
     const siteKey = this.config?.v3SiteKey;
     if (!siteKey) {
       return new Observable<string>((subscriber) => {
-        subscriber.error(new Error('reCAPTCHA v3 siteKey is not provided in RECAPTCHA_CONFIG.'));
+        subscriber.error(new RecaptchaConfigurationError('reCAPTCHA v3 siteKey is not provided in RECAPTCHA_CONFIG.'));
       });
     }
 
@@ -59,7 +59,7 @@ export class RecaptchaV3Service {
 
             if (!grecaptchaObj) {
               this.ngZone.run(() => {
-                subscriber.error(new Error('Google reCAPTCHA script is not loaded or missing.'));
+                subscriber.error(new RecaptchaLoadError('Google reCAPTCHA script is not loaded or missing.'));
               });
               return;
             }
@@ -69,7 +69,7 @@ export class RecaptchaV3Service {
                 .then((token: string | null | undefined) => {
                   this.ngZone.run(() => {
                     if (!token) {
-                      subscriber.error(new Error('Google reCAPTCHA returned null/undefined token.'));
+                      subscriber.error(new RecaptchaExecuteError('Google reCAPTCHA returned null/undefined token.'));
                       return;
                     }
                     subscriber.next(token);
@@ -78,7 +78,8 @@ export class RecaptchaV3Service {
                 })
                 .catch((err: unknown) => {
                   this.ngZone.run(() => {
-                    subscriber.error(err instanceof Error ? err : new Error(String(err)));
+                    const message = err instanceof Error ? err.message : String(err);
+                    subscriber.error(new RecaptchaExecuteError(message));
                   });
                 });
             });

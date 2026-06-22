@@ -8,7 +8,7 @@ import {
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { RecaptchaV3Service } from './recaptcha-v3.service';
-import { RecaptchaLoaderService, RECAPTCHA_CONFIG } from 'angular-google-recaptcha-v3/core';
+import { RecaptchaLoaderService, RECAPTCHA_CONFIG, RecaptchaConfigurationError, RecaptchaExecuteError, RecaptchaLoadError } from 'angular-google-recaptcha-v3/core';
 
 const MOCK_TOKEN = 'mock-recaptcha-v3-token';
 
@@ -91,7 +91,8 @@ describe('RecaptchaV3Service', () => {
   it('should error when v3SiteKey is not provided in config', (done) => {
     injector = buildInjector({});
     injector.get(RecaptchaV3Service).execute('login').subscribe({
-      error: (err: Error) => {
+      error: (err) => {
+        expect(err instanceof RecaptchaConfigurationError).toBe(true);
         expect(err.message).toContain('siteKey is not provided');
         done();
       }
@@ -111,7 +112,8 @@ describe('RecaptchaV3Service', () => {
     mockGrecaptcha(null);
     injector = buildInjector();
     injector.get(RecaptchaV3Service).execute('login').subscribe({
-      error: (err: Error) => {
+      error: (err) => {
+        expect(err instanceof RecaptchaExecuteError).toBe(true);
         expect(err.message).toContain('null/undefined token');
         done();
       }
@@ -122,7 +124,8 @@ describe('RecaptchaV3Service', () => {
     mockGrecaptcha(MOCK_TOKEN, true);
     injector = buildInjector();
     injector.get(RecaptchaV3Service).execute('login').subscribe({
-      error: (err: Error) => {
+      error: (err) => {
+        expect(err instanceof RecaptchaExecuteError).toBe(true);
         expect(err.message).toBe('grecaptcha error');
         done();
       }
@@ -133,7 +136,8 @@ describe('RecaptchaV3Service', () => {
     clearGrecaptcha();
     injector = buildInjector();
     injector.get(RecaptchaV3Service).execute('login').subscribe({
-      error: (err: Error) => {
+      error: (err) => {
+        expect(err instanceof RecaptchaLoadError).toBe(true);
         expect(err.message).toContain('not loaded');
         done();
       }

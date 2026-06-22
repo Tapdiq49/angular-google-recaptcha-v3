@@ -225,6 +225,46 @@ export class SignalsPageComponent {
 }
 ```
 
+### 4. Custom Error Handling
+
+The library provides specifically typed error classes so you can easily catch and handle distinct failure scenarios (such as configuration issues, script loading failures, or Google rejecting the execution).
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { RecaptchaV3Service } from 'angular-google-recaptcha-v3/v3';
+import { 
+  RecaptchaConfigurationError, 
+  RecaptchaExecuteError, 
+  RecaptchaLoadError 
+} from 'angular-google-recaptcha-v3/core';
+
+@Component({
+  selector: 'app-error-demo',
+  template: `<button (click)="submit()">Submit</button>`,
+  standalone: true
+})
+export class ErrorDemoComponent {
+  private recaptchaV3 = inject(RecaptchaV3Service);
+
+  submit(): void {
+    this.recaptchaV3.execute('submit_action').subscribe({
+      next: (token) => console.log('Success:', token),
+      error: (err: unknown) => {
+        if (err instanceof RecaptchaConfigurationError) {
+          console.error('Missing siteKey configuration:', err.message);
+        } else if (err instanceof RecaptchaLoadError) {
+          console.error('Failed to load Google reCAPTCHA script:', err.message);
+        } else if (err instanceof RecaptchaExecuteError) {
+          console.error('Google rejected execution:', err.message);
+        } else {
+          console.error('Unknown error:', err);
+        }
+      }
+    });
+  }
+}
+```
+
 ---
 
 ## SSR (Server‑Side Rendering) Support

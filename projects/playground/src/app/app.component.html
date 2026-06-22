@@ -51,6 +51,12 @@
           class="nav-btn">
           ⚙️ Global Config
         </button>
+        <button (click)="setTab('errors')"
+          [style.background-color]="activeTab() === 'errors' ? '#ef4444' : 'transparent'"
+          [style.color]="activeTab() === 'errors' ? '#ffffff' : '#94a3b8'"
+          class="nav-btn">
+          🚨 Error Handling
+        </button>
       </nav>
     </aside>
 
@@ -75,6 +81,11 @@
       <!-- TAB 4: Enterprise vs Traditional Switch -->
       @if (activeTab() === 'config-toggle') {
       <app-config-toggle />
+      }
+
+      <!-- TAB 5: Error Handling Tester -->
+      @if (activeTab() === 'errors') {
+      <app-error-tester />
       }
 
     </section>

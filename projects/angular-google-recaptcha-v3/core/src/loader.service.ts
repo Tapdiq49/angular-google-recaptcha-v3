@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, of, Subject, merge, throwError } from 'rxjs';
 import { filter, mergeMap, shareReplay } from 'rxjs/operators';
 import { RECAPTCHA_CONFIG } from './tokens';
+import { RecaptchaLoadError } from './errors';
 
 /** Typed narrowing of `window` — only the globals this service touches. */
 type WindowWithRecaptcha = Window &
@@ -135,7 +136,7 @@ export class RecaptchaLoaderService {
         // BehaviorSubject. scriptLoaded$ stays usable; callers subscribe to
         // scriptLoadError$ for failure notifications.
         this.scriptError$.next(
-          new Error('Failed to load Google reCAPTCHA script after multiple retries.')
+          new RecaptchaLoadError('Failed to load Google reCAPTCHA script after multiple retries.')
         );
       }
     };
