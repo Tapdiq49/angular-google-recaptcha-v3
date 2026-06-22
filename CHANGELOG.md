@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.7] - 2026-06-22
+
+### Added
+- **Detailed Error Handling**: Introduced explicit typed error classes (`RecaptchaLoadError`, `RecaptchaConfigurationError`, `RecaptchaExecuteError`) extending a base `RecaptchaError` class for fine-grained catch blocks.
+- **Playground Error Tester**: Added an "Error Handling" interactive tab to the demo playground, demonstrating how to simulate and catch custom Google reCAPTCHA errors.
+
+### Changed
+- **Error Propagation**: Modified `RecaptchaLoaderService` and `RecaptchaV3Service` to throw specific custom error instances instead of generic `Error` instances, retaining original messages but classifying the root cause reliably.
+
 ## [1.0.6] - 2026-06-18
 
 ### Added
