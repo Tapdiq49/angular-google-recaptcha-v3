@@ -36,6 +36,9 @@
             "browser": "projects/playground/src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "projects/playground/tsconfig.app.json",
+            "assets": [
+              "projects/playground/src/favicon.png"
+            ],
             "optimization": {
               "scripts": true,
               "styles": true,
