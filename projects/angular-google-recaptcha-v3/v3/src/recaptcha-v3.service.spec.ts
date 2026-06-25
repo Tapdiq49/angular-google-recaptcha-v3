@@ -26,7 +26,6 @@ function clearGrecaptcha(): void {
   delete (window as Window & { grecaptcha?: unknown }).grecaptcha;
 }
 
-// Mock NgZone without using `any`.
 // `as unknown as NgZone` is the standard TypeScript pattern for casting mocks to
 // a concrete type when we only need a safe structural subset of the interface.
 function buildMockNgZone(): NgZone {
@@ -76,21 +75,39 @@ describe('RecaptchaV3Service', () => {
   });
 
   it('should be created', () => {
+    // Arrange & Act
     injector = buildInjector();
-    expect(injector.get(RecaptchaV3Service)).toBeTruthy();
+    const service = injector.get(RecaptchaV3Service);
+
+    // Assert
+    expect(service).toBeTruthy();
   });
 
   it('should return empty string observable when SSR (not in browser)', (done) => {
+    // Arrange
     injector = buildInjector({ v3SiteKey: 'key' }, true, 'server');
-    injector.get(RecaptchaV3Service).execute('login').subscribe((token) => {
+    const service = injector.get(RecaptchaV3Service);
+
+    // Act
+    const stream$ = service.execute('login');
+
+    // Assert
+    stream$.subscribe((token) => {
       expect(token).toBe('');
       done();
     });
   });
 
   it('should error when v3SiteKey is not provided in config', (done) => {
+    // Arrange
     injector = buildInjector({});
-    injector.get(RecaptchaV3Service).execute('login').subscribe({
+    const service = injector.get(RecaptchaV3Service);
+
+    // Act
+    const stream$ = service.execute('login');
+
+    // Assert
+    stream$.subscribe({
       error: (err) => {
         expect(err instanceof RecaptchaConfigurationError).toBe(true);
         expect(err.message).toContain('siteKey is not provided');
@@ -100,18 +117,32 @@ describe('RecaptchaV3Service', () => {
   });
 
   it('should return a token on successful execute()', (done) => {
+    // Arrange
     mockGrecaptcha(MOCK_TOKEN);
     injector = buildInjector();
-    injector.get(RecaptchaV3Service).execute('login').subscribe((token) => {
+    const service = injector.get(RecaptchaV3Service);
+
+    // Act
+    const stream$ = service.execute('login');
+
+    // Assert
+    stream$.subscribe((token) => {
       expect(token).toBe(MOCK_TOKEN);
       done();
     });
   });
 
   it('should error when grecaptcha returns a null token', (done) => {
+    // Arrange
     mockGrecaptcha(null);
     injector = buildInjector();
-    injector.get(RecaptchaV3Service).execute('login').subscribe({
+    const service = injector.get(RecaptchaV3Service);
+
+    // Act
+    const stream$ = service.execute('login');
+
+    // Assert
+    stream$.subscribe({
       error: (err) => {
         expect(err instanceof RecaptchaExecuteError).toBe(true);
         expect(err.message).toContain('null/undefined token');
@@ -121,9 +152,16 @@ describe('RecaptchaV3Service', () => {
   });
 
   it('should error when grecaptcha.execute() rejects', (done) => {
+    // Arrange
     mockGrecaptcha(MOCK_TOKEN, true);
     injector = buildInjector();
-    injector.get(RecaptchaV3Service).execute('login').subscribe({
+    const service = injector.get(RecaptchaV3Service);
+
+    // Act
+    const stream$ = service.execute('login');
+
+    // Assert
+    stream$.subscribe({
       error: (err) => {
         expect(err instanceof RecaptchaExecuteError).toBe(true);
         expect(err.message).toBe('grecaptcha error');
@@ -133,9 +171,16 @@ describe('RecaptchaV3Service', () => {
   });
 
   it('should error when window.grecaptcha is not available', (done) => {
+    // Arrange
     clearGrecaptcha();
     injector = buildInjector();
-    injector.get(RecaptchaV3Service).execute('login').subscribe({
+    const service = injector.get(RecaptchaV3Service);
+
+    // Act
+    const stream$ = service.execute('login');
+
+    // Assert
+    stream$.subscribe({
       error: (err) => {
         expect(err instanceof RecaptchaLoadError).toBe(true);
         expect(err.message).toContain('not loaded');
@@ -145,18 +190,27 @@ describe('RecaptchaV3Service', () => {
   });
 
   it('executeAsync() should resolve to the token', async () => {
+    // Arrange
     mockGrecaptcha(MOCK_TOKEN);
     injector = buildInjector();
-    const token = await injector.get(RecaptchaV3Service).executeAsync('checkout');
+    const service = injector.get(RecaptchaV3Service);
+
+    // Act
+    const token = await service.executeAsync('checkout');
+
+    // Assert
     expect(token).toBe(MOCK_TOKEN);
   });
 
   it('concurrent execute() calls should not cancel each other (mergeMap behaviour)', (done) => {
+    // Arrange
     mockGrecaptcha(MOCK_TOKEN);
     injector = buildInjector();
     const service = injector.get(RecaptchaV3Service);
     let count = 0;
     const check = () => { if (++count === 2) done(); };
+
+    // Act
     service.execute('action1').subscribe({ next: () => check() });
     service.execute('action2').subscribe({ next: () => check() });
   });

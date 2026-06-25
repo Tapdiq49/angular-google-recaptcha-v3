@@ -262,6 +262,35 @@ export class ErrorDemoComponent {
       }
     });
   }
+
+### 5. Tracking Script Load Status
+
+You can inject `RecaptchaLoaderService` to monitor the real-time script loading state (`idle`, `loading`, `loaded`, or `error`). This is useful for rendering loading spinners or custom load-error screens:
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { RecaptchaLoaderService } from 'angular-google-recaptcha-v3/core';
+
+@Component({
+  selector: 'app-load-monitor',
+  standalone: true,
+  imports: [AsyncPipe],
+  template: `
+    @if (status$ | async; as status) {
+      @if (status === 'loading') {
+        <div>Loading reCAPTCHA API...</div>
+      } @else if (status === 'loaded') {
+        <div>reCAPTCHA ready!</div>
+      } @else if (status === 'error') {
+        <div style="color: red;">Failed to load script.</div>
+      }
+    }
+  `
+})
+export class LoadMonitorComponent {
+  private loader = inject(RecaptchaLoaderService);
+  public status$ = this.loader.scriptLoadStatus$;
 }
 ```
 

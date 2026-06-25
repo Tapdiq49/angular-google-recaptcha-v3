@@ -79,9 +79,10 @@ export class MyComponent {
       const token = await this.v3Service.executeAsync('checkout');
       this.signalService.setToken(token);
       this.addLog('executeAsync("checkout")', token, 'Promise');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Promise execution failed:', err);
-      this.signalService.setError(err.message || 'Error occurred');
+      const errMsg = err instanceof Error ? err.message : String(err);
+      this.signalService.setError(errMsg);
     } finally {
       this.signalService.setLoading(false);
     }

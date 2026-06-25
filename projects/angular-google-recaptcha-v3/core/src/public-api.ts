@@ -5,3 +5,4 @@
 export * from './tokens';
 export * from './loader.service';
 export * from './errors';
+export * from './grecaptcha.interface';

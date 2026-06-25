@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RecaptchaLoaderService } from 'angular-google-recaptcha-v3/core';
+import { RecaptchaLoaderService, WindowWithGrecaptcha } from 'angular-google-recaptcha-v3/core';
 import { IRecaptchaV2 } from './recaptcha-v2.interface';
 import { RecaptchaV2Service } from './recaptcha-v2.service';
 
@@ -119,7 +119,7 @@ export class RecaptchaV2Component implements OnInit, AfterViewInit, IRecaptchaV2
 
   private cleanupWidget(): void {
     if (this.widgetId !== null) {
-      const windowRef = window as any;
+      const windowRef = window as WindowWithGrecaptcha;
       const grecaptchaObj = windowRef.grecaptcha?.enterprise || windowRef.grecaptcha;
       if (grecaptchaObj) {
         try {
@@ -140,7 +140,7 @@ export class RecaptchaV2Component implements OnInit, AfterViewInit, IRecaptchaV2
     const newContainer = this.wrapper.nativeElement.firstElementChild as HTMLDivElement;
 
     this.ngZone.runOutsideAngular(() => {
-      const windowRef = window as any;
+      const windowRef = window as WindowWithGrecaptcha;
       const grecaptchaObj = windowRef.grecaptcha?.enterprise || windowRef.grecaptcha;
 
       if (!grecaptchaObj) {
@@ -181,7 +181,7 @@ export class RecaptchaV2Component implements OnInit, AfterViewInit, IRecaptchaV2
   public execute(): void {
     if (!this.isBrowser || this.widgetId === null) return;
 
-    const windowRef = window as any;
+    const windowRef = window as WindowWithGrecaptcha;
     const grecaptchaObj = windowRef.grecaptcha?.enterprise || windowRef.grecaptcha;
 
     if (grecaptchaObj) {
@@ -197,7 +197,7 @@ export class RecaptchaV2Component implements OnInit, AfterViewInit, IRecaptchaV2
   public reset(): void {
     if (!this.isBrowser || this.widgetId === null) return;
 
-    const windowRef = window as any;
+    const windowRef = window as WindowWithGrecaptcha;
     const grecaptchaObj = windowRef.grecaptcha?.enterprise || windowRef.grecaptcha;
 
     if (grecaptchaObj) {

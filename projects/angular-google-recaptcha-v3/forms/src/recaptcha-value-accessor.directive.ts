@@ -1,4 +1,4 @@
-import { Directive, forwardRef, inject, DestroyRef } from '@angular/core';
+import { Directive, forwardRef, inject, DestroyRef, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RecaptchaV2Component } from 'angular-google-recaptcha-v3/v2';
@@ -18,6 +18,7 @@ import { RecaptchaV2Component } from 'angular-google-recaptcha-v3/v2';
 export class RecaptchaValueAccessorDirective implements ControlValueAccessor {
   private host = inject(RecaptchaV2Component, { host: true, optional: true });
   private destroyRef = inject(DestroyRef);
+  private elementRef = inject(ElementRef);
 
   private onChange: (value: string | null) => void = () => {};
   private onTouched: () => void = () => {};
@@ -77,6 +78,13 @@ export class RecaptchaValueAccessorDirective implements ControlValueAccessor {
    * but we can hook this if required.
    */
   public setDisabledState?(isDisabled: boolean): void {
-    // reCAPTCHA does not support disabling natively.
+    const element = this.elementRef.nativeElement as HTMLElement;
+    if (isDisabled) {
+      element.style.opacity = '0.5';
+      element.style.pointerEvents = 'none';
+    } else {
+      element.style.opacity = '1';
+      element.style.pointerEvents = 'auto';
+    }
   }
 }

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.9] - 2026-06-25
+
+### Added
+- **Loader Status**: Added `scriptLoadStatus$` observable to `RecaptchaLoaderService` to expose `'idle' | 'loading' | 'loaded' | 'error'` loading states.
+- **CVA Disabled State**: Implemented visual passivity (`opacity: 0.5`, `pointer-events: none`) in `RecaptchaValueAccessorDirective` when a form control is set to disabled.
+
+### Fixed
+- **V3 Test Key Fallback**: Added automatic mock token fallback for the public V2 test key (`6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI`) during subsequent V3 executions to prevent null token execution errors in sandbox/playground environments.
+
+### Changed
+- **Type Safety**: Centralized global window/grecaptcha type definitions into a shared [grecaptcha.interface.ts](file:///c:/repos/package/angular-google-recaptcha-v3/projects/angular-google-recaptcha-v3/core/src/grecaptcha.interface.ts) file. Completely eliminated `any` type casts across all services, directives, components, and playground features.
+- **Testing Pattern**: Refactored all unit test suites in `loader.service.spec.ts` and `recaptcha-v3.service.spec.ts` to follow the Arrange-Act-Assert (AAA) pattern.
+
 ## [1.0.8] - 2026-06-22
 
 ### Fixed

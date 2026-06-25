@@ -28,7 +28,11 @@ export class LoginFormComponent {
     recaptcha: new FormControl<string | null>(null, [Validators.required])
   });
 
-  public lastSubmittedValue = signal<any>(null);
+  public lastSubmittedValue = signal<{
+    username?: string | null;
+    password?: string | null;
+    recaptcha?: string | null;
+  } | null>(null);
 
   // Documentation Code Snippets
   public readonly v2HtmlCode = `<form [formGroup]="form">

@@ -4,13 +4,7 @@ import { BehaviorSubject, Observable, of, Subject, merge, throwError } from 'rxj
 import { filter, mergeMap, shareReplay } from 'rxjs/operators';
 import { RECAPTCHA_CONFIG } from './tokens';
 import { RecaptchaLoadError } from './errors';
-
-/** Typed narrowing of `window` — only the globals this service touches. */
-type WindowWithRecaptcha = Window &
-  typeof globalThis & {
-    grecaptcha?: unknown;
-    ngRecaptchaLoaded?: (() => void) | undefined;
-  };
+import { WindowWithGrecaptcha } from './grecaptcha.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +15,7 @@ export class RecaptchaLoaderService {
 
   private scriptLoaded$ = new BehaviorSubject<boolean>(false);
   private scriptError$ = new Subject<Error>();
+  private scriptStatus$ = new BehaviorSubject<'idle' | 'loading' | 'loaded' | 'error'>('idle');
   private isBrowser = isPlatformBrowser(this.platformId);
 
   // Fix #1: retryCount is now a class-level field so recursive injectScript() calls
@@ -33,6 +28,11 @@ export class RecaptchaLoaderService {
    * Subscribe to this to handle load errors gracefully.
    */
   public readonly scriptLoadError$ = this.scriptError$.asObservable();
+
+  /**
+   * Emits the current loading status: 'idle', 'loading', 'loaded', or 'error'.
+   */
+  public readonly scriptLoadStatus$ = this.scriptStatus$.asObservable();
 
   private ready$!: Observable<boolean>;
 
@@ -77,6 +77,7 @@ export class RecaptchaLoaderService {
       }
     }
 
+    this.scriptStatus$.next('loading');
     this.injectScript();
     return this.ready$;
   }
@@ -87,15 +88,17 @@ export class RecaptchaLoaderService {
     // Prevent duplicate script injection
     const existingScript = document.getElementById('angular-google-recaptcha-v3-script');
     if (existingScript) {
-      const windowRef = window as WindowWithRecaptcha;
+      const windowRef = window as WindowWithGrecaptcha;
       if (windowRef.grecaptcha) {
         this.scriptLoaded$.next(true);
+        this.scriptStatus$.next('loaded');
       } else {
         // Script tag exists but grecaptcha not ready yet — chain onto existing callback
         const prevCallback = windowRef.ngRecaptchaLoaded;
         windowRef.ngRecaptchaLoaded = () => {
           if (prevCallback) prevCallback();
           this.scriptLoaded$.next(true);
+          this.scriptStatus$.next('loaded');
         };
       }
       return;
@@ -116,9 +119,10 @@ export class RecaptchaLoaderService {
     script.async = true;
     script.defer = true;
 
-    const windowRef = window as WindowWithRecaptcha;
+    const windowRef = window as WindowWithGrecaptcha;
     windowRef.ngRecaptchaLoaded = () => {
       this.scriptLoaded$.next(true);
+      this.scriptStatus$.next('loaded');
     };
 
     script.onerror = () => {
@@ -135,6 +139,7 @@ export class RecaptchaLoaderService {
         // Fix #2: Emit the error on a separate Subject instead of poisoning the
         // BehaviorSubject. scriptLoaded$ stays usable; callers subscribe to
         // scriptLoadError$ for failure notifications.
+        this.scriptStatus$.next('error');
         this.scriptError$.next(
           new RecaptchaLoadError('Failed to load Google reCAPTCHA script after multiple retries.')
         );
