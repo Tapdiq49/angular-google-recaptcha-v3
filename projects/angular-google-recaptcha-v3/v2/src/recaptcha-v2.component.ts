@@ -37,6 +37,7 @@ export class RecaptchaV2Component implements OnInit, AfterViewInit, IRecaptchaV2
   theme = input<'light' | 'dark'>('light');
   size = input<'normal' | 'compact' | 'invisible'>('normal');
   tabIndex = input(0);
+  badge = input<'bottomright' | 'bottomleft' | 'inline'>('bottomright');
 
   /**
    * Optional registration key for RecaptchaV2Service.
@@ -71,6 +72,7 @@ export class RecaptchaV2Component implements OnInit, AfterViewInit, IRecaptchaV2
       const th = this.theme();
       const sz = this.size();
       const ti = this.tabIndex();
+      const bd = this.badge();
       const loaded = this.scriptLoaded();
       const ready = this.viewReady();
 
@@ -130,6 +132,13 @@ export class RecaptchaV2Component implements OnInit, AfterViewInit, IRecaptchaV2
       }
       this.widgetId = null;
     }
+
+    if (this.isBrowser) {
+      const badgeEl = document.querySelector('.grecaptcha-badge');
+      if (badgeEl?.parentNode) {
+        badgeEl.parentNode.removeChild(badgeEl);
+      }
+    }
   }
 
   private renderWidget(): void {
@@ -153,6 +162,7 @@ export class RecaptchaV2Component implements OnInit, AfterViewInit, IRecaptchaV2
         theme: this.theme(),
         size: this.size(),
         tabindex: this.tabIndex(),
+        badge: this.badge(),
         callback: (token: string) => {
           this.ngZone.run(() => {
             this.resolved.emit(token);

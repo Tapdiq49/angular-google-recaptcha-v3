@@ -11,6 +11,7 @@ export interface GrecaptchaV2 {
       theme?: 'light' | 'dark';
       size?: 'normal' | 'compact' | 'invisible';
       tabindex?: number;
+      badge?: 'bottomright' | 'bottomleft' | 'inline';
       callback?: (token: string) => void;
       'expired-callback'?: () => void;
       'error-callback'?: () => void;

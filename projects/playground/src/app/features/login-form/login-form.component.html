@@ -30,7 +30,7 @@
         <div class="field">
           <label class="field__label">Verification</label>
           <angular-google-recaptcha-v3 #v2Recaptcha [siteKey]="'6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'"
-            formControlName="recaptcha" [theme]="v2Theme()" [size]="v2Size()" (resolved)="onV2Resolved($event)"
+            formControlName="recaptcha" [theme]="v2Theme()" [size]="v2Size()" [badge]="v2Badge()" (resolved)="onV2Resolved($event)"
             (error)="onV2Error()" (expired)="onV2Expired()">
           </angular-google-recaptcha-v3>
           @if (loginForm.get('recaptcha')?.touched && loginForm.get('recaptcha')?.invalid) {
@@ -84,6 +84,30 @@
             <button type="button" (click)="setV2Size('invisible')"
               [style.background-color]="v2Size() === 'invisible' ? '#3b82f6' : '#334155'" class="btn-opt">
               Invisible
+            </button>
+          </div>
+        </div>
+
+        <div class="prop-row">
+          <span class="prop-row__label">Badge [badge] (Invisible only)</span>
+          <div class="prop-row__btns">
+            <button type="button" (click)="setV2Badge('bottomright')"
+              [disabled]="v2Size() !== 'invisible'"
+              [style.opacity]="v2Size() === 'invisible' ? '1' : '0.5'"
+              [style.background-color]="v2Badge() === 'bottomright' ? '#3b82f6' : '#334155'" class="btn-opt">
+              Bottom Right
+            </button>
+            <button type="button" (click)="setV2Badge('bottomleft')"
+              [disabled]="v2Size() !== 'invisible'"
+              [style.opacity]="v2Size() === 'invisible' ? '1' : '0.5'"
+              [style.background-color]="v2Badge() === 'bottomleft' ? '#3b82f6' : '#334155'" class="btn-opt">
+              Bottom Left
+            </button>
+            <button type="button" (click)="setV2Badge('inline')"
+              [disabled]="v2Size() !== 'invisible'"
+              [style.opacity]="v2Size() === 'invisible' ? '1' : '0.5'"
+              [style.background-color]="v2Badge() === 'inline' ? '#3b82f6' : '#334155'" class="btn-opt">
+              Inline
             </button>
           </div>
         </div>

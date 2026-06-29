@@ -12,7 +12,7 @@ A production-grade, enterprise-ready, tree-shakable Angular library for integrat
 - **First‑Class Signals Support**: Decoupled `angular-google-recaptcha-v3/signals` entry point for modern reactive applications.
 - **SSR & Hydration Safe**: Strictly guards DOM operations on the server side using `isPlatformBrowser`.
 - **Zoneless Support**: Executes heavy execution logic outside `Zone.js` context for high performance.
-- **Dynamic Re‑Render**: V2 widget automatically re‑renders when inputs (theme, size, tabIndex, siteKey) change! No manual cleanup required!
+- **Dynamic Re‑Render**: V2 widget automatically re‑renders when inputs (theme, size, tabIndex, badge, siteKey) change! No manual cleanup required!
 - **Tree‑Shakable Secondary Entry Points**: Only import what you use (`core`, `v2`, `v3`, `enterprise`, `signals`, `forms`, `testing`).
 - **ControlValueAccessor (CVA)**: Native support for Reactive Forms and Template‑driven Forms.
 - **Region & Domain Flex**: Easily switch between `google.com` and `recaptcha.net` (for restricted regions).
@@ -144,7 +144,7 @@ export class LoginComponent {
 }
 ```
 
-**Dynamic Re‑Render Feature**: `RecaptchaV2Component` now supports automatic re‑rendering when any of its inputs (siteKey, theme, size, tabIndex) change! This means you can dynamically switch between light/dark themes, or normal/compact/invisible sizes at runtime without any manual cleanup!
+**Dynamic Re‑Render Feature**: `RecaptchaV2Component` now supports automatic re‑rendering when any of its inputs (siteKey, theme, size, tabIndex, badge) change! This means you can dynamically switch between light/dark themes, normal/compact/invisible sizes, or badge positions at runtime without any manual cleanup!
 
 ### 2. reCAPTCHA v3 Execution Service (RxJS & Promise)
 

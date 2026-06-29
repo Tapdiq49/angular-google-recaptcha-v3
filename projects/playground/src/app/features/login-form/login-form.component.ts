@@ -18,6 +18,7 @@ export class LoginFormComponent {
   // V2 Component Configuration Inputs simulation
   public v2Theme = signal<'light' | 'dark'>('light');
   public v2Size = signal<'normal' | 'compact' | 'invisible'>('normal');
+  public v2Badge = signal<'bottomright' | 'bottomleft' | 'inline'>('bottomright');
 
   // V2 direct event logs
   public v2EventLogs = signal<string[]>([]);
@@ -41,6 +42,7 @@ export class LoginFormComponent {
     formControlName="recaptcha"
     theme="light"
     size="normal"
+    badge="bottomright"
     (resolved)="onResolved($event)"
     (error)="onError()"
     (expired)="onExpired()">
@@ -115,5 +117,9 @@ export class MyComponent {
 
   public setV2Size(size: 'normal' | 'compact' | 'invisible'): void {
     this.v2Size.set(size);
+  }
+
+  public setV2Badge(badge: 'bottomright' | 'bottomleft' | 'inline'): void {
+    this.v2Badge.set(badge);
   }
 }
